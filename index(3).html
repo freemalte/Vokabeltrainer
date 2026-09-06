@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>C1 Wortschatz</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0F1D22">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+body{
+  --bg:#0F1D22; --bg2:#16282F; --line:#26414A;
+  --paper:#F7F6F1; --ink:#15211F; --muted:#8AA3AB;
+  --amber:#E8B33C; --mint:#5FB49C;
+  background:var(--bg); color:#DCE7EA;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  padding:max(20px,env(safe-area-inset-top)) 16px calc(40px + env(safe-area-inset-bottom));
+  -webkit-tap-highlight-color:transparent;
+}
+.page{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+.page.center{align-items:center;text-align:center;padding-top:50px;gap:16px}
+h1{font-family:Georgia,"Iowan Old Style",Palatino,serif;font-size:30px;font-weight:400;margin:0;letter-spacing:-.01em}
+h2{font-size:12px;font-weight:600;color:var(--muted);margin:0 0 10px}
+.sub{color:var(--muted);font-size:14px;line-height:1.55;margin:8px 0 0;max-width:46ch}
+.foot{color:#5E7880;font-size:12px;margin:0;text-align:center;line-height:1.6}
+
+.boxes{display:flex;gap:6px}
+.box{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:3px;padding:14px 2px 10px;position:relative;text-align:center}
+.tab{position:absolute;top:-1px;left:6px;right:6px;height:4px;border-radius:0 0 2px 2px}
+.bnum{font-family:Georgia,serif;font-size:18px}
+.blab{font-size:10px;color:var(--muted);margin-top:2px}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:transparent;border:1px solid var(--line);color:#9FB6BD;border-radius:3px;
+  padding:9px 12px;font-size:13px;cursor:pointer;min-width:40px;font-family:inherit}
+.chip.wide{flex:1;padding:12px}
+.chip.on{background:var(--amber);border-color:var(--amber);color:#22190A;font-weight:600}
+.chip.full{border-color:#3D6B62}
+.chip:focus-visible,.cta:focus-visible,.btn:focus-visible,.link:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.row{display:flex;gap:14px;margin-top:10px;flex-wrap:wrap}
+.link{background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;padding:6px 0;font-family:inherit}
+
+.cta{background:var(--amber);color:#22190A;border:none;border-radius:3px;padding:16px;
+  font-size:16px;font-weight:600;cursor:pointer;width:100%;font-family:inherit}
+.cta:disabled{opacity:.35}
+.err{color:#E8A08F;font-size:14px;margin:0;line-height:1.5}
+
+.bar{display:flex;justify-content:space-between;align-items:center}
+.count{font-size:13px;color:var(--muted)}
+.track{height:2px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:-14px}
+.fill{height:100%;background:var(--amber);transition:width .3s}
+
+.card{background:var(--paper);color:var(--ink);border-radius:4px;padding:30px 24px;
+  min-height:250px;display:flex;flex-direction:column;justify-content:center;
+  box-shadow:0 1px 0 #E2DFD5 inset,0 10px 24px rgba(0,0,0,.35)}
+.pos{font-size:11px;color:#7C8A85;margin-bottom:14px}
+.term{font-family:Georgia,"Iowan Old Style",Palatino,serif;font-size:38px;line-height:1.15;letter-spacing:-.02em;word-break:break-word}
+.back{margin-top:22px;border-top:1px solid #E0DCD1;padding-top:18px}
+.de{font-size:20px;font-weight:600;line-height:1.35}
+.de.big{font-family:Georgia,serif;font-size:27px;font-weight:400;margin-bottom:18px}
+.ex{font-family:Georgia,serif;font-size:15px;color:#39443F;margin:12px 0 0;line-height:1.6}
+.ex em{font-style:normal;box-shadow:inset 0 -.55em 0 rgba(232,179,60,.45)}
+.auto{font-size:11px;color:#9AA49F;margin:10px 0 0}
+.verdict{font-size:22px;font-weight:600}
+.verdict.good{color:#3F8A6E}
+.verdict.bad{color:#B4472F;font-family:Georgia,serif;font-weight:400;font-size:29px}
+.input{width:100%;border:none;border-bottom:2px solid #CFCABB;background:transparent;
+  font-size:23px;padding:8px 0;font-family:Georgia,serif;color:var(--ink);outline:none;border-radius:0}
+.input:focus{border-color:var(--amber)}
+
+.two{display:flex;gap:10px}
+.btn{flex:1;border:none;border-radius:3px;padding:16px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}
+.again{background:#3A2622;color:#F0C0B2;border:1px solid #5A3A32}
+.got{background:var(--mint);color:#0C2620}
+.spin{width:26px;height:26px;border:2px solid var(--line);border-top-color:var(--amber);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}.spin{animation-duration:2s}}
+</style>
+</head>
+<body>
+<div id="app"><div class="page center"><div class="spin"></div></div></div>
+
+<script src="words.js"></script>
+<script src="vocab.js"></script>
+
+<script>
+/* ---------- Bestand zusammenfuehren ---------- */
+const WORDLIST = window.WORDLIST || {};
+const VOCAB    = window.VOCAB || {};
+
+const CARDS = {};
+Object.keys(VOCAB).forEach(L => VOCAB[L].forEach(r => CARDS[r[0]] = {de:r[2], ex:r[3]}));
+
+const WORDS = [];
+Object.keys(WORDLIST).forEach(L =>
+  WORDLIST[L].forEach(r => WORDS.push({w:r[0], t:r[1], letter:L})));
+const LETTERS = Object.keys(WORDLIST);
+const FULL = new Set(LETTERS.filter(L => WORDLIST[L].every(r => CARDS[r[0]])));
+
+const TYPE_DE={n:"Substantiv",v:"Verb",adj:"Adjektiv",adv:"Adverb",prep:"Präposition"};
+const typeLabel=t=>t.split(",").map(x=>TYPE_DE[x.trim()]||x.trim()).join(" / ");
+
+const INTERVAL=[0,1,2,4,9,20];
+const BOX_COLOR=["#3A4A50","#D9553E","#DE8B39","#CFB63F","#7FAE63","#4E9B8F"];
+const today=()=>Math.floor(Date.now()/86400000);
+
+/* ---------- Speicher ---------- */
+const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+let progress=load("c1:progress",{});
+let auto=load("c1:auto",{});
+const saveProgress=()=>{try{localStorage.setItem("c1:progress",JSON.stringify(progress))}catch(e){}};
+const saveAuto=()=>{try{localStorage.setItem("c1:auto",JSON.stringify(auto))}catch(e){}};
+
+const cardFor=w=>CARDS[w]||(auto[w]?{de:auto[w],ex:null}:null);
+
+/* ---------- Uebersetzung nachladen ---------- */
+async function translate(word){
+  const url="https://api.mymemory.translated.net/get?q="+
+            encodeURIComponent(word)+"&langpair=en|de";
+  const r=await fetch(url);
+  const j=await r.json();
+  const t=j&&j.responseData&&j.responseData.translatedText;
+  if(!t||/no query|mymemory warning|invalid/i.test(t)) throw new Error("leer");
+  return t.charAt(0).toUpperCase()+t.slice(1);
+}
+
+/* ---------- Zustand ---------- */
+let picked=new Set(LETTERS);
+let size=20, mode="cards";
+let queue=[], idx=0, revealed=false, check=null, stats={right:0,wrong:0};
+let screen="home", msg="", loadMsg="";
+
+const shuffle=a=>{const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x};
+const norm=s=>s.toLowerCase().trim().replace(/^(to|the|a|an)\s+/,"").replace(/[^a-z\s-]/g,"");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function exampleHtml(text,word){
+  const safe=word.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  return esc(text).replace(new RegExp("("+safe+"\\w*)","i"),"<em>$1</em>");
+}
+
+/* ---------- Runde ---------- */
+async function start(){
+  const d=today();
+  const pool=WORDS.filter(it=>picked.has(it.letter));
+  const due=[],fresh=[];
+  pool.forEach(it=>{const p=progress[it.w];if(!p)fresh.push(it);else if(p.d<=d)due.push(it)});
+  due.sort((a,b)=>progress[a.w].d-progress[b.w].d);
+  const q=due.concat(shuffle(fresh)).slice(0,size);
+  if(!q.length){msg="In dieser Auswahl ist gerade nichts fällig. Nimm mehr Buchstaben dazu oder komm morgen wieder.";render();return}
+  msg="";
+  queue=shuffle(q).map(it=>({...it,again:false}));
+
+  const missing=queue.filter(it=>!cardFor(it.w));
+  if(missing.length){
+    screen="loading";
+    let done=0, failed=0;
+    for(const it of missing){
+      loadMsg="Übersetzungen werden geholt: "+(done+1)+" von "+missing.length;
+      render();
+      try{ auto[it.w]=await translate(it.w); }catch(e){ failed++; }
+      done++;
+    }
+    saveAuto();
+    if(failed===missing.length){
+      msg="Das Wörterbuch ist gerade nicht erreichbar. Ohne Netz lassen sich nur bereits geladene Wörter üben.";
+      screen="home";render();return;
+    }
+  }
+  queue=queue.filter(it=>cardFor(it.w));
+  if(!queue.length){msg="Für diese Wörter liegt noch keine Übersetzung vor.";screen="home";render();return}
+
+  idx=0;revealed=false;check=null;stats={right:0,wrong:0};
+  screen="session";render();
+}
+
+function answer(ok){
+  const cur=queue[idx],d=today();
+  const p=progress[cur.w]||{b:0,d:0};
+  const nb=ok?Math.min(5,p.b+1):1;
+  progress[cur.w]={b:nb,d:d+INTERVAL[nb]};saveProgress();
+  stats.right+=ok?1:0;stats.wrong+=ok?0:1;
+  if(!ok&&!cur.again)queue.push({...cur,again:true});
+  if(idx+1>=queue.length){screen="done"}else{idx++;revealed=false;check=null}
+  render();
+}
+
+/* ---------- Ansicht ---------- */
+function render(){
+  const app=document.getElementById("app"), d=today();
+
+  if(screen==="home"){
+    const counts=[0,0,0,0,0,0];let dueCount=0;
+    WORDS.forEach(it=>{const p=progress[it.w];const b=p?p.b:0;counts[b]++;if(p&&p.b<5&&p.d<=d)dueCount++});
+    app.innerHTML=
+      '<div class="page">'+
+        '<header><h1>C1 Wortschatz</h1>'+
+        '<p class="sub">'+WORDS.length+' Wörter der CEFR-Liste. '+(WORDS.length-counts[0])+' davon schon in einem Fach, '+dueCount+' heute fällig.</p></header>'+
+        '<div class="boxes">'+
+          [1,2,3,4,5].map(b=>'<div class="box"><div class="tab" style="background:'+BOX_COLOR[b]+'"></div><div class="bnum">'+counts[b]+'</div><div class="blab">Fach '+b+'</div></div>').join("")+
+          '<div class="box"><div class="tab" style="background:'+BOX_COLOR[0]+'"></div><div class="bnum">'+counts[0]+'</div><div class="blab">neu</div></div>'+
+        '</div>'+
+        '<section><h2>Buchstaben</h2><div class="chips">'+
+          LETTERS.map(L=>'<button class="chip'+(picked.has(L)?" on":"")+(FULL.has(L)?" full":"")+'" data-letter="'+L+'">'+L+'</button>').join("")+
+        '</div><div class="row">'+
+          '<button class="link" data-all="1">alle</button>'+
+          '<button class="link" data-none="1">keine</button>'+
+          '<button class="link" data-full="1">nur mit Beispielsätzen</button>'+
+        '</div></section>'+
+        '<section><h2>Runde</h2><div class="chips">'+
+          [10,20,30,50].map(n=>'<button class="chip'+(size===n?" on":"")+'" data-size="'+n+'">'+n+'</button>').join("")+
+        '</div><div class="chips" style="margin-top:6px">'+
+          '<button class="chip wide'+(mode==="cards"?" on":"")+'" data-mode="cards">Karten drehen</button>'+
+          '<button class="chip wide'+(mode==="type"?" on":"")+'" data-mode="type">Englisch tippen</button>'+
+        '</div></section>'+
+        (msg?'<p class="err">'+msg+'</p>':"")+
+        '<button class="cta" id="go" '+(picked.size?"":"disabled")+'>Runde starten</button>'+
+        '<p class="foot">Grün umrandete Buchstaben haben geprüfte Übersetzungen mit Beispielsatz. Alle übrigen Wörter werden beim ersten Auftauchen automatisch übersetzt und danach gespeichert.<br><button class="link" id="reset">Fortschritt zurücksetzen</button></p>'+
+      '</div>';
+  }
+
+  if(screen==="loading"){
+    app.innerHTML='<div class="page center"><div class="spin"></div><p class="sub">'+esc(loadMsg)+'</p></div>';
+  }
+
+  if(screen==="session"){
+    const cur=queue[idx], card=cardFor(cur.w);
+    const front=mode==="cards"
+      ? '<div class="pos">'+typeLabel(cur.t)+'</div><div class="term">'+esc(cur.w)+'</div>'
+      : '<div class="pos">'+typeLabel(cur.t)+'</div><div class="de big">'+esc(card.de)+'</div>'+
+        '<input class="input" id="typed" placeholder="englisches Wort" autocomplete="off" autocapitalize="off" spellcheck="false" '+(revealed?"disabled":"")+'>';
+    let back="";
+    if(revealed){
+      const extra=card.ex?'<p class="ex">'+exampleHtml(card.ex,cur.w)+'</p>'
+                         :'<p class="auto">automatisch übersetzt, noch ohne Beispielsatz</p>';
+      back=mode==="cards"
+        ? '<div class="back"><div class="de">'+esc(card.de)+'</div>'+extra+'</div>'
+        : '<div class="back"><div class="verdict '+(check==="ok"?"good":"bad")+'">'+(check==="ok"?"richtig":esc(cur.w))+'</div>'+extra+'</div>';
+    }
+    const actions=revealed
+      ? '<div class="two"><button class="btn again" id="no">Nochmal</button><button class="btn got" id="yes">Gewusst</button></div>'
+      : '<button class="cta" id="flip">'+(mode==="cards"?"Umdrehen":"Prüfen")+'</button>';
+    app.innerHTML=
+      '<div class="page">'+
+        '<div class="bar"><button class="link" id="quit">beenden</button><span class="count">'+(idx+1)+' / '+queue.length+'</span></div>'+
+        '<div class="track"><div class="fill" style="width:'+((idx/queue.length)*100)+'%"></div></div>'+
+        '<div class="card">'+front+back+'</div>'+
+        '<div>'+actions+'</div>'+
+      '</div>';
+    const inp=document.getElementById("typed");
+    if(inp&&!revealed){inp.focus();inp.addEventListener("keydown",e=>{if(e.key==="Enter")doCheck()})}
+  }
+
+  if(screen==="done"){
+    app.innerHTML=
+      '<div class="page center"><h1>Runde fertig</h1>'+
+      '<p class="sub">'+stats.right+' gewusst, '+stats.wrong+' nochmal. Die Wörter rutschen durch die Fächer und kommen wieder, wenn sie fällig sind.</p>'+
+      '<button class="cta" id="again">Nächste Runde</button>'+
+      '<button class="link" id="home">zur Übersicht</button></div>';
+  }
+  wire();
+}
+
+function doCheck(){
+  const cur=queue[idx];
+  check=norm(document.getElementById("typed").value)===norm(cur.w)?"ok":"no";
+  revealed=true;render();
+}
+
+function wire(){
+  const on=(sel,fn)=>document.querySelectorAll(sel).forEach(el=>el.onclick=fn);
+  on("[data-letter]",e=>{const L=e.currentTarget.dataset.letter;picked.has(L)?picked.delete(L):picked.add(L);render()});
+  on("[data-size]",e=>{size=+e.currentTarget.dataset.size;render()});
+  on("[data-mode]",e=>{mode=e.currentTarget.dataset.mode;render()});
+  on("[data-all]",()=>{picked=new Set(LETTERS);render()});
+  on("[data-none]",()=>{picked=new Set();render()});
+  on("[data-full]",()=>{picked=new Set(FULL);render()});
+  const el=id=>document.getElementById(id);
+  if(el("go"))el("go").onclick=start;
+  if(el("reset"))el("reset").onclick=()=>{if(confirm("Allen Lernfortschritt löschen?")){progress={};saveProgress();render()}};
+  if(el("flip"))el("flip").onclick=()=>{if(mode==="type")doCheck();else{revealed=true;render()}};
+  if(el("yes"))el("yes").onclick=()=>answer(true);
+  if(el("no"))el("no").onclick=()=>answer(false);
+  if(el("quit"))el("quit").onclick=()=>{screen="home";render()};
+  if(el("again"))el("again").onclick=start;
+  if(el("home"))el("home").onclick=()=>{screen="home";render()};
+}
+
+render();
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+}
+</script>
+</body>
+</html>
